@@ -377,93 +377,148 @@ using namespace std;
 //    }
 //};
 
+//class Node{
+//public:
+//    int value;
+//    Node *next;
+//
+//    explicit Node(int value): value(value), next(nullptr){}
+//};
+//
+//Node* addTwoNum(Node *l1, Node *l2){
+//    int sum = 0;
+//    int carry = 0;
+//    Node *res_head = new Node(-1);
+//    Node *res_next = res_head;
+//    Node *p = l1;
+//    Node *q = l2;
+//
+//    while(p != nullptr || q != nullptr || carry){
+//        sum = (p?p->value:0) + (q?q->value:0);
+//        if (sum >= 10){
+//            carry = 1;
+//            sum = sum - 10;
+//        }
+//
+//        Node* res_temp = new Node(sum);
+//        res_next->next = res_temp;
+//
+//        res_next = res_next->next;
+//        if(p) p = p->next;
+//        if(q) q = q->next;
+//    }
+//    return res_head->next;
+//}
+//
+//#include <vector>
+//#include <set>
+//
+//using namespace std;
+//vector<int> intersection(const vector<int> &v1, const vector<int> &v2){
+//    set<int> s1;
+//    for (int i : v1) {
+//        s1.insert(i);
+//    }
+//    set<int> resSet;
+//    for(int j=1;j<v2.size();j++){
+//        if(s1.find(v2[j]) != s1.end()){
+//            resSet.insert(v2[j]);
+//        }
+//    }
+//    vector<int> resVec;
+//    resVec.reserve(resSet.size());
+//    for (int iter : resSet) {
+//        resVec.push_back(iter);
+//    }
+//
+//    return resVec;
+//}
+//
+//#include <vector>
+//#include <map>
+//using namespace std;
+//
+//vector<int> intersection2(const vector<int> &v1, const vector<int> &v2){
+//    map<int, int> record;
+//    for(int i : v1){
+//        record[i] += 1;
+//    }
+//    vector<int> resVec;
+//    for(int j : v2){
+//        if(record[j] > 0){
+//            resVec.push_back(j);
+//            record[j] --;
+//        }
+//    }
+//
+//    return resVec;
+//}
+//
+//#include <string>
+//string reverseString(string &str){
+//    int i = 0;
+//    int j = str.size() - 1;
+//    while(i < j){
+//        swap(str[i], str[j]);
+//        i++;
+//        j--;
+//    }
+//    return str;
+//}
+
+
+using namespace std;
 class Node{
 public:
     int value;
     Node *next;
+    explicit Node(int value): value(value), next(nullptr){
 
-    explicit Node(int value): value(value), next(nullptr){}
+    }
 };
 
-Node* addTwoNum(Node *l1, Node *l2){
-    int sum = 0;
-    int carry = 0;
-    Node *res_head = new Node(-1);
-    Node *res_next = res_head;
-    Node *p = l1;
-    Node *q = l2;
+Node* oddEvenLinkedList(Node *input){
+    if (input == nullptr || input->next == nullptr || input->next->next == nullptr){
+        return input;
+    }
 
-    while(p != nullptr || q != nullptr || carry){
-        sum = (p?p->value:0) + (q?q->value:0);
-        if (sum >= 10){
-            carry = 1;
-            sum = sum - 10;
+    Node *odd = new Node(-1);
+    Node *even = new Node(-1);
+
+    Node *oddNext = odd;
+    Node *evenNext = even;
+    Node *next = input;
+
+    int count = 1;
+    while( next != nullptr){
+        if (count % 2 != 0){
+            // odd
+            oddNext->next = next;
+        }
+        else{
+            // even
+            evenNext->next = next;
         }
 
-        Node* res_temp = new Node(sum);
-        res_next->next = res_temp;
-
-        res_next = res_next->next;
-        if(p) p = p->next;
-        if(q) q = q->next;
+        oddNext = oddNext->next;
+        evenNext = evenNext->next;
+        next = next->next;
+        count++;
     }
-    return res_head->next;
+    oddNext ->next = even->next;
+    return odd->next;
 }
 
-#include <vector>
-#include <set>
-
-using namespace std;
-vector<int> intersection(const vector<int> &v1, const vector<int> &v2){
-    set<int> s1;
-    for (int i : v1) {
-        s1.insert(i);
-    }
-    set<int> resSet;
-    for(int j=1;j<v2.size();j++){
-        if(s1.find(v2[j]) != s1.end()){
-            resSet.insert(v2[j]);
+void moveZeros(vector<int> &input){
+    int k = 0;
+    for (int i =0; i<input.size(); i++){
+        if(input[i]){
+            if(k != i){
+                swap(input[k], input[i]);
+            }
+            k++;
         }
     }
-    vector<int> resVec;
-    resVec.reserve(resSet.size());
-    for (int iter : resSet) {
-        resVec.push_back(iter);
-    }
-
-    return resVec;
-}
-
-#include <vector>
-#include <map>
-using namespace std;
-
-vector<int> intersection2(const vector<int> &v1, const vector<int> &v2){
-    map<int, int> record;
-    for(int i : v1){
-        record[i] += 1;
-    }
-    vector<int> resVec;
-    for(int j : v2){
-        if(record[j] > 0){
-            resVec.push_back(j);
-            record[j] --;
-        }
-    }
-
-    return resVec;
-}
-
-#include <string>
-string reverseString(string &str){
-    int i = 0;
-    int j = str.size() - 1;
-    while(i < j){
-        swap(str[i], str[j]);
-        i++;
-        j--;
-    }
-    return str;
 }
 
 int main(){
