@@ -382,7 +382,7 @@ public:
     int value;
     Node *next;
 
-    Node(int value): value(value), next(nullptr){}
+    explicit Node(int value): value(value), next(nullptr){}
 };
 
 Node* addTwoNum(Node *l1, Node *l2){
@@ -410,18 +410,90 @@ Node* addTwoNum(Node *l1, Node *l2){
     return res_head->next;
 }
 
+#include <vector>
+#include <set>
+
+using namespace std;
+vector<int> intersection(const vector<int> &v1, const vector<int> &v2){
+    set<int> s1;
+    for (int i : v1) {
+        s1.insert(i);
+    }
+    set<int> resSet;
+    for(int j=1;j<v2.size();j++){
+        if(s1.find(v2[j]) != s1.end()){
+            resSet.insert(v2[j]);
+        }
+    }
+    vector<int> resVec;
+    resVec.reserve(resSet.size());
+    for (int iter : resSet) {
+        resVec.push_back(iter);
+    }
+
+    return resVec;
+}
+
+#include <vector>
+#include <map>
+using namespace std;
+
+vector<int> intersection2(const vector<int> &v1, const vector<int> &v2){
+    map<int, int> record;
+    for(int i : v1){
+        record[i] += 1;
+    }
+    vector<int> resVec;
+    for(int j : v2){
+        if(record[j] > 0){
+            resVec.push_back(j);
+            record[j] --;
+        }
+    }
+
+    return resVec;
+}
+
+#include <string>
+string reverseString(string &str){
+    int i = 0;
+    int j = str.size() - 1;
+    while(i < j){
+        swap(str[i], str[j]);
+        i++;
+        j--;
+    }
+    return str;
+}
+
 int main(){
 
-    Node *l1 = new Node(1);
-    Node *temp = new Node(2);
-    l1->next = temp;
+//    Node *l1 = new Node(2);
+//    Node *temp = new Node(2);
+//    l1->next = temp;
+//
+//    Node *l2 = new Node(1);
+//    Node *temp2 = new Node(2);
+//    l2->next = temp2;
+//    Node *res = addTwoNum(l1, l2);
+//    std::cout<< res->value <<std::endl;
+//   vector<int> v1;
+//   v1.push_back(1);
+//   v1.push_back(2);
+//   v1.push_back(2);
+//   v1.push_back(1);
+//
+//   vector<int> v2;
+//   v2.push_back(2);
+//   v2.push_back(2);
+//
+//   vector<int> resVec = intersection2(v1, v2);
+//   cout<< resVec.size()<<endl;
+//   cout<< resVec[1]<<endl;
 
-    Node *l2 = new Node(1);
-    Node *temp2 = new Node(2);
-    l2->next = temp2;
-    Node *res = addTwoNum(l1, l2);
-    std::cout<< res->value <<std::endl;
-
+    string in = "abc";
+    string str = reverseString(in);
+    cout<<str;
     return 0;
 
 }
