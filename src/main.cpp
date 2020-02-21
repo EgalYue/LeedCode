@@ -528,36 +528,6 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-vector<TreeNode*> allPossibleFBT(int N) {
-    vector<TreeNode*> res;
-    if(1==N) {
-        res.push_back(new TreeNode(0));
-        return res;
-    } else if(0 == N %2 ){
-        return res;
-    } else{
-        int left_num = 1;
-        int right_num = N - 2;
-
-        while( right_num > 0){
-            vector<TreeNode*> left_tree = allPossibleFBT(left_num);
-            vector<TreeNode*> right_tree = allPossibleFBT(right_num);
-            for(auto i:left_tree){
-                for(auto j:right_tree){
-                    TreeNode* root = new TreeNode(0);
-                    root->left = i;
-                    root->right = j;
-                    res.push_back(root);
-                }
-            }
-            left_num += 2;
-            right_num += 2;
-        }
-
-        return res;
-    }
-}
-
 int main(){
 
     vector<int> input;
@@ -571,18 +541,7 @@ int main(){
 //    input.push_back(1);
 //    input.push_back(2);
 
-    input.push_back(1);
-    input.push_back(2);
 
-    vector<int> input2;
-    input2.push_back(2);
-    input2.push_back(1);
-
-    vector<vector<int>> matrix;
-    vector<int> ele1;
-    matrix.push_back(ele1);
-
-    cout<< matrix.size()<<endl;
     return 0;
 
 }
