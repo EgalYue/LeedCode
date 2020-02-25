@@ -529,8 +529,11 @@ struct TreeNode {
 };
 
 int main(){
-
-    vector<int> input;
+    string input = "abc";
+//    cout<< input.substr(0, input.size()-1)<<endl;
+    char a = 'a';
+    input = input + a;
+    cout<< input <<endl;
 
 
 //    input.push_back(4);
