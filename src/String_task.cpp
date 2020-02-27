@@ -40,3 +40,49 @@ public:
         return sum;
     }
 };
+
+
+#include <stack>
+class Solution20 {
+public:
+    bool isValid(string s) {
+        stack<char> record;
+
+        for(int i=0;i<s.size();i++){
+            if(record.empty()){
+                record.push(s[i]);
+            }
+            else{
+                char top_char = record.top();
+                if(top_char == '(' && s[i] == ')'){
+                    record.pop();
+                } else if(top_char == '[' && s[i] == ']'){
+                    record.pop();
+                } else if (top_char == '{' && s[i] == '}'){
+                    record.pop();
+                } else{
+                    record.push(s[i]);
+                }
+            }
+        }
+        if(record.empty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
+
+class Solution58 {
+public:
+    int lengthOfLastWord(string s) {
+        int result = 0, i = s.size() - 1;
+        while(i >= 0 && s[i] == ' ') i--;
+        while(i >= 0){
+            if(s[i] == ' ') return result;
+            else    result++;
+            i--;
+        }
+        return result;
+    }
+};

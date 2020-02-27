@@ -528,12 +528,16 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+#include <stack>
 int main(){
     string input = "abc";
 //    cout<< input.substr(0, input.size()-1)<<endl;
     char a = 'a';
     input = input + a;
     cout<< input <<endl;
+
+    stack<int> record;
+    cout<< record.top() << endl;
 
 
 //    input.push_back(4);
