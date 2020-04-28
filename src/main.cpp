@@ -528,16 +528,66 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-#include <stack>
-int main(){
-    string input = "abc";
-//    cout<< input.substr(0, input.size()-1)<<endl;
-    char a = 'a';
-    input = input + a;
-    cout<< input <<endl;
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(nullptr) {}
+};
 
-    stack<int> record;
-    cout<< record.top() << endl;
+class Solution19 {
+public:
+
+    int getLength(ListNode* head){
+        ListNode* curr = head;
+        int num = 0;
+        while(curr != nullptr){
+            curr = curr->next;
+            num++;
+        }
+        return num;
+    }
+
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        int length = getLength(head);
+        int pos = length - n;
+
+        ListNode* sentinel = new ListNode(-1);
+        ListNode* pre = sentinel;
+        pre->next = head;
+        ListNode* curr = head;
+
+        while(pos >= 0){
+            if(pos == n){
+                pre->next = curr->next;
+            }
+
+            pre = curr;
+            curr = curr->next;
+            pos--;
+        }
+
+        return sentinel->next;
+
+    }
+};
+
+
+#include <stack>
+#include <inttypes.h>
+int main(){
+
+
+    uint32_t b = 1;
+
+    cout<< (1 & b) << endl;
+
+    printf("%" PRIu32 "\n",b);
+
+
+//    ListNode* curr = new ListNode(9);
+//    ListNode* temp = curr;
+//    temp->val = 10;
+//    cout<< curr->val<<endl;
 
 
 //    input.push_back(4);
