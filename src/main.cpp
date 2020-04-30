@@ -574,6 +574,61 @@ public:
 
 #include <stack>
 #include <inttypes.h>
+
+
+#include<numeric>
+class Solution1013 {
+public:
+    bool canThreePartsEqualSum(vector<int>& A) {
+        int sum = accumulate(A.begin(), A.end(), 0);
+        if (sum % 3 != 0) {
+            return false;
+        }
+        int count = 0, subSum = 0;
+        for (int i = 0; i < A.size(); i ++) {
+            subSum += A[i];
+            if (subSum == sum / 3) {
+                count ++;
+                subSum = 0;
+            }
+            if (count == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+#include <algorithm>
+class Solution581 {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        vector<int>::iterator iter_begin = nums.begin();
+        vector<int>::iterator iter_end = nums.end();
+        int i;
+        for(i = 0; i < nums.size();i++){
+            vector<int>::iterator min_right = min_element(iter_begin + i + 1, iter_end);
+            if(nums[i] > *min_right){
+                break;
+            }
+        }
+        cout<< "i "<< i << endl;
+        if (i == nums.size() - 1){
+            return 0;
+        }
+
+        int j;
+        for(j = nums.size()-1; j > 0;j--){
+            vector<int>::iterator max_left = max_element(iter_begin, iter_begin + j);
+            if(nums[j] < *max_left){
+                break;
+            }
+        }
+        cout<<"j " <<  j << endl;
+        return j- i+1;
+
+    }
+};
 int main(){
 
 
@@ -589,15 +644,19 @@ int main(){
 //    temp->val = 10;
 //    cout<< curr->val<<endl;
 
+    vector<int> input;
+    input.push_back(1);
+    input.push_back(2);
+    input.push_back(3);
+    input.push_back(4);
+//    input.push_back(18);
+//    input.push_back(-19);
+//    input.push_back(-1);
+//    input.push_back(10);
+//    input.push_back(10);
 
-//    input.push_back(4);
-//    input.push_back(5);
-//    input.push_back(6);
-//    input.push_back(7);
-//    input.push_back(0);
-//    input.push_back(1);
-//    input.push_back(2);
-
+    Solution581 s;
+    cout<< s.findUnsortedSubarray(input) << endl;
 
     return 0;
 
