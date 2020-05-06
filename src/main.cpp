@@ -629,15 +629,37 @@ public:
 
     }
 };
+
+
+class Solution523 {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        size_t len = nums.size();
+
+        int sum =0;
+        for(int r=0;r<len;r++){
+            for(int l=0;l<r;l++){
+                sum = accumulate(nums.begin() + l,nums.begin() + r+1,0);
+
+                cout<< "L= " << l << " R= "<< r<< " sum=" <<sum << endl;
+                if(0 == k && k == sum && r-l >=1){
+                    return true;
+                }
+                else if( 0 !=k && sum % k == 0 && r-l >=1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
 int main(){
-
-
-    uint32_t b = 1;
-
-    cout<< (1 & b) << endl;
-
-    printf("%" PRIu32 "\n",b);
-
+//    uint32_t b = 1;
+//
+//    cout<< (1 & b) << endl;
+//
+//    printf("%" PRIu32 "\n",b);
 
 //    ListNode* curr = new ListNode(9);
 //    ListNode* temp = curr;
@@ -645,18 +667,19 @@ int main(){
 //    cout<< curr->val<<endl;
 
     vector<int> input;
+    input.push_back(0);
     input.push_back(1);
-    input.push_back(2);
-    input.push_back(3);
-    input.push_back(4);
+    input.push_back(0);
+//    input.push_back(6);
+//    input.push_back(7);
 //    input.push_back(18);
 //    input.push_back(-19);
 //    input.push_back(-1);
 //    input.push_back(10);
 //    input.push_back(10);
 
-    Solution581 s;
-    cout<< s.findUnsortedSubarray(input) << endl;
+    Solution523 s;
+    cout<< s.checkSubarraySum(input, 0) << endl;
 
     return 0;
 

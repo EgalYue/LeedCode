@@ -5,42 +5,49 @@
 #include <string>
 #include <vector>
 using namespace std;
-string longestPalindrome(string s) {
-    int len = s.size();
-    if (len <=1){
-        return s;
-    }
-    int longestPalindrome = 1;
-    string longestPalindromeStr = s.substr(0,1);
-    vector<bool> tmp(len, false);
-    vector<vector<bool>> dp(len, tmp);
 
-    for(int r=1;r<len;r++){
-        for(int l=0;l<r;l++){
-            if(s.at(l) == s.at(r) && (r - l <= 2 || dp[l + 1][r - 1])-){
-                dp[l][r] = true;
-                if (r - l + 1 > longestPalindrome) {
-                    longestPalindrome = r - l + 1;
-                    longestPalindromeStr = s.substr(l, r - l + 1);
+class Solution5 {
+public:
+    string longestPalindrome(string s) {
+        int len = s.size();
+        if (len <=1){
+            return s;
+        }
+        int longestPalindrome = 1;
+        string longestPalindromeStr = s.substr(0,1);
+        vector<bool> tmp(len, false);
+        vector<vector<bool>> dp(len, tmp);
+
+        for(int r=1;r<len;r++){
+            for(int l=0;l<r;l++){
+                if(s.at(l) == s.at(r) && (r - l <= 2 || dp[l + 1][r - 1])){
+                    dp[l][r] = true;
+                    if (r - l + 1 > longestPalindrome) {
+                        longestPalindrome = r - l + 1;
+                        longestPalindromeStr = s.substr(l, r - l + 1);
+                    }
                 }
             }
         }
-    }
 
-    return longestPalindromeStr;
-}
-//========================================================================
-int maxSubArray(vector<int> &nums){
-    int len = nums.size();
-    vector<int> dp(len);
-    dp[0] = nums[0];
-    int res = dp[0];
-    for (int i = 1;i<len;i++){
-        dp[i] = max(dp[i-1] + nums[i], nums[i]);
-        res = max(res, dp[i]);
+        return longestPalindromeStr;
     }
-    return res;
-}
+};
+//========================================================================
+class Solution53 {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int len = nums.size();
+        int max_ending_here = nums[0];
+        int res = nums[0];
+        for (int i = 1;i<len;i++){
+            max_ending_here = max(max_ending_here + nums[i], nums[i]);
+            res = max(res, max_ending_here);
+        }
+        return res;
+
+    }
+};
 
 int maxSubArray2(vector<int> &nums){
     int len = nums.size();
@@ -55,7 +62,7 @@ int maxSubArray2(vector<int> &nums){
 
 //========================================================================
 
-class Solution {
+class Solution70 {
 public:
     int climbStairs(int n) {
         if(n <= 2){
@@ -71,13 +78,41 @@ public:
         for(int i = 3; i <= n;i++){
 //            dp[i] = dp[i - 1] + dp[i - 2];
               res = pre1 + pre2;
-              pre1 = res;
               pre2 = pre1;
+              pre1 = res;
         }
 //        return dp[len-1];
         return res;
     }
 };
+
+
+class Solution08_01 {
+public:
+    int waysToStep(int n) {
+        if(1 == n){
+            return 1;
+        } else if(2 == n){
+            return 2;
+        } else if(3 == n){
+            return 4;
+        }
+
+        long pre3 = 1;
+        long pre2 = 2;
+        long pre1 = 4;
+
+        long res = 0;
+        for(int i = 4; i <= n;i++){
+            res = (pre1 + pre2 + pre3) %1000000007;
+            pre3 = pre2 %1000000007;
+            pre2 = pre1 %1000000007;
+            pre1 = res %1000000007;
+        }
+        return res;
+    }
+};
+
 
 //============================================================================
 
@@ -359,4 +394,100 @@ int rob2(vector<int>& nums) {
     vector<int>::iterator p_no_first = max_element(dp_no_first.begin(), dp_no_first.end());
     return max(*p_no_last, *p_no_first);
 }
+
+
+
+class Solution42 {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int res = nums[0];
+        int currMax = nums[0];
+
+        for(int i = 1;i< nums.size();i++){
+            if(currMax + nums[i] > nums[i]){
+                currMax = currMax + nums[i];
+            }else{
+                currMax = nums[i];
+            }
+
+            if(currMax > res){
+                res = currMax;
+            }
+        }
+
+        return res;
+    }
+};
+
+#include <algorithm>
+#include <numeric>
+class NumArray {
+private:
+    vector<int> _sum;
+public:
+    NumArray(vector<int>& nums) {
+        _sum.resize(nums.size() + 1);
+        for (int i = 0; i < nums.size(); i++) {
+            _sum[i+1] = _sum[i] + nums[i];
+        }
+    }
+
+    int sumRange(int i, int j) {
+        return _sum[j+1] - _sum[i];
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * int param_1 = obj->sumRange(i,j);
+ */
+
+
+class Solution05 {
+public:
+    string longestPalindrome(string s) {
+        int len = s.size();
+        if (len <=1){
+            return s;
+        }
+        int longestPalindrome = 1;
+        string longestPalindromeStr = s.substr(0,1);
+        vector<bool> tmp(len, false);
+        vector<vector<bool>> dp(len, tmp);
+
+        for(int r=1;r<len;r++){
+            for(int l=0;l<r;l++){
+                if(s.at(l) == s.at(r) && (r - l <= 2 || dp[l + 1][r - 1])){
+                    dp[l][r] = true;
+                    if (r - l + 1 > longestPalindrome) {
+                        longestPalindrome = r - l + 1;
+                        longestPalindromeStr = s.substr(l, r - l + 1);
+                    }
+                }
+            }
+        }
+
+        return longestPalindromeStr;
+    }
+};
+
+
+class Solution523 {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        vector<int> sum(nums.size());
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.size(); i++)
+            sum[i] = sum[i - 1] + nums[i];
+        for (int start = 0; start < nums.size() - 1; start++) {
+            for (int end = start + 1; end < nums.size(); end++) {
+                int summ = sum[end] - sum[start] + nums[start];
+                if (summ == k || (k != 0 && summ % k == 0))
+                    return true;
+            }
+        }
+        return false;
+    }
+};
 
